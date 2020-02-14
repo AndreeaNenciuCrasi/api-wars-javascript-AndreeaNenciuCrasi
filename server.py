@@ -15,12 +15,15 @@ def verify_password(plain_text_password, hashed_password):
     hashed_bytes_password = hashed_password.encode('utf-8')
     return bcrypt.checkpw(plain_text_password.encode('utf-8'), hashed_bytes_password)
 
+@app.route('/')
+@app.route('/home')
+def home_page():
+    return render_template('home.html')
 
 @app.route('/index')
 def index_page():
     return render_template('index.html')
 
-@app.route('/')
 @app.route('/registration', methods=['GET', 'POST'])
 def registration_page():
     return render_template('registration.html')
