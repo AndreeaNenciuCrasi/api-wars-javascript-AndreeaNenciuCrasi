@@ -11,8 +11,34 @@
     <title>API WARS</title>
   </head>
   <body>
-    <p>{{session['username']}}</p>
-    <a href="{{ url_for('logout') }}">Logout</a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+<!--  <a class="navbar-brand" href="#"></a>-->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="{{ url_for('index_page') }}">Planet List <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Voting statistics</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('registration_page') }}">Registration</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link"href="{{ url_for('logout') }}">Logout</a>
+      </li>
+    </ul>
+    <span class="navbar-text">
+      Signed in as {{session['username']}}
+    </span>
+  </div>
+</nav>
     <h1>Star Wars universe planets</h1>
     <button type="button" class="btn btn-primary">Previous</button>
     <button type="button" class="btn btn-primary">Next</button>
@@ -31,12 +57,6 @@
     </tr>
   </thead>
   <tbody id="tableBody">
-<!--    <tr>-->
-<!--      <th scope="row">1</th>-->
-<!--      <td>Mark</td>-->
-<!--      <td>Otto</td>-->
-<!--      <td>@mdo</td>-->
-<!--    </tr>-->
   </tbody>
 </table>
 
