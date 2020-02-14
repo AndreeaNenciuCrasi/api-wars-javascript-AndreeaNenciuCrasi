@@ -22,7 +22,7 @@
         <a class="nav-link" href="{{ url_for('index_page') }}">Planet List <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Voting statistics</a>
+        <a class="nav-link" href="#" data-toggle="modal" data-target="#exampleModalCenter"">Voting statistics</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{{ url_for('registration_page') }}">Registration</a>
@@ -35,7 +35,7 @@
       </li>
     </ul>
     <span class="navbar-text">
-      Signed in as {{session['username']}}
+      Signed in as <span id="loggedUserName">{{session['username']}}</span>
     </span>
   </div>
 </nav>
@@ -53,13 +53,43 @@
       <th scope="col">Surface Water %</th>
       <th scope="col">Population</th>
       <th scope="col">Residents</th>
+      {% if session %}
       <th scope="col">   </th>
+      {% endif %}
     </tr>
   </thead>
   <tbody id="tableBody">
   </tbody>
 </table>
 
+    <!-- Modal -->
+<<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Voting statistics</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">Planet</th>
+          <th scope="col">Votes</th>
+        </tr>
+      </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

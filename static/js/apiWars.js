@@ -1,4 +1,6 @@
 let listPlanetsWithResidents =[];
+let userNmae = document.querySelector('#loggedUserName');
+
 
 fetch("https://swapi.co/api/planets")
 .then((response) => response.json())
@@ -15,12 +17,13 @@ fetch("https://swapi.co/api/planets")
                         <button type="button" id="buttonResident" class="btn btn-primary residents" data-toggle="modal" data-target="#exampleModal"> 
                         ${planet.residents.length} Resident(s)
                         </button>` : 'No known residents'} </td>
-                        <td><button>Vote</button></td>`
+                        ${ userNmae.innerHTML !== '' ? `<td><button class="voteButton">Vote</button></td>` : ''}`;
             document.querySelector('#tableBody').appendChild(tr);
             let btnResidents = document.querySelector(".residents");
             planet.residents.forEach(function(list){
                 listPlanetsWithResidents.push([planet.name, list]);
             });
+
             btnResidents.addEventListener('click', onButtonResidentsClick(planet.name, listPlanetsWithResidents));
             });
 })
@@ -91,3 +94,14 @@ function onButtonResidentsClick(name, listPlanetsWithResidents) {
      document.body.appendChild(divContainer);
     createResidentsModal(name, listPlanetsWithResidents);
 };
+
+let btnVote = document.querySelectorAll('.voteButton');
+            for(i = 0; i < btnVote.length; i++){
+                btnVote[i].addEventListener('click', function(){
+                btnVote[i].textContent= 'VOTED';
+                console.log('button');
+            });
+            }
+
+
+
