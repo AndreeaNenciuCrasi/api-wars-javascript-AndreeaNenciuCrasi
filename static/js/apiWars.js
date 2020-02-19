@@ -1,12 +1,13 @@
 let listPlanetsWithResidents =[];
-let userNmae = document.querySelector('#loggedUserName');
-
+let userName = document.querySelector('#loggedUserName');
+console.log(userName);
 
 fetch("https://swapi.co/api/planets")
 .then((response) => response.json())
 .then((data) => {
         data.results.forEach(function (planet) {
             const tr = document.createElement("tr");
+            // console.log(planet)
             tr.innerHTML=`<td>${planet.name}<td>
                         <td>${planet.diameter} km</td>
                         <td>${planet.climate}</td>
@@ -17,7 +18,7 @@ fetch("https://swapi.co/api/planets")
                         <button type="button" id="buttonResident" class="btn btn-primary residents" data-toggle="modal" data-target="#exampleModal"> 
                         ${planet.residents.length} Resident(s)
                         </button>` : 'No known residents'} </td>
-                        ${ userNmae.innerHTML !== '' ? `<td><button class="voteButton">Vote</button></td>` : ''}`;
+                        ${ userName.innerHTML !== '' ? `<td><button onClick="buttonClicked('${planet.name}')" class="voteButton">Vote</button></td>` : ''}`;
             document.querySelector('#tableBody').appendChild(tr);
             let btnResidents = document.querySelector(".residents");
             planet.residents.forEach(function(list){
@@ -26,17 +27,17 @@ fetch("https://swapi.co/api/planets")
 
             btnResidents.addEventListener('click', onButtonResidentsClick(planet.name, listPlanetsWithResidents));
             });
-})
+});
 
 function createResidentsModal(name, listPlanetsWithResidents) {
     let listToPrint = [];
-    for(i =0; i < listPlanetsWithResidents.length; i++){
+    for(let i =0; i < listPlanetsWithResidents.length; i++){
         if (listPlanetsWithResidents[i][0] === name) {
             listToPrint.push(listPlanetsWithResidents[i][1]);
         }}
-    for(i = 0; i < listToPrint.length; i++){
+    for(let j = 0; j < listToPrint.length; j++){
 
-            fetch(listToPrint[i])
+            fetch(listToPrint[j])
             .then((response) => response.json())
             .then((data) => {
 
@@ -95,6 +96,34 @@ function onButtonResidentsClick(name, listPlanetsWithResidents) {
     createResidentsModal(name, listPlanetsWithResidents);
 };
 
+function buttonClicked(planetName){
+    console.log('Planet voted');
+    let username = userName.textContent;
+    console.log(username);
+    let data = {planetName, username};
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        };
+        fetch('http://127.0.0.1:5000/api/add-voted-planet', options);
+    }
+        // url = '/voteplanet/' + planetName;
+        //     fetch(url)
+        //     .then(function (res) {
+        //         console.log(res)
+        //         return res, json()
+        //     })
+        //     .then(function (data) {
+        //         console.log(data)
+        //         Console.log(data);
+        //     }).catch(function (err) {
+        //         console.log(err)
+        //         console.log(err)
+        //     })
+
 let btnVote = document.querySelectorAll('.voteButton');
             for(i = 0; i < btnVote.length; i++){
                 btnVote[i].addEventListener('click', function(){
@@ -104,4 +133,10 @@ let btnVote = document.querySelectorAll('.voteButton');
             }
 
 
-
+function updateVotesModal() {
+                //fetch la ruta care cheama datamanager
+                //se intorc json
+                //identifici modal in pagin
+                //each pe resultate
+                //document.write('tr
+}
