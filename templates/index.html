@@ -24,7 +24,7 @@
         <a class="nav-link" href="{{ url_for('index_page') }}">Planet List <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#" data-toggle="modal" data-target="#exampleModalCenter"">Voting statistics</a>
+        <a class="nav-link" href="#" data-toggle="modal" data-target="#exampleModalCenter">Voting statistics</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{{ url_for('registration_page') }}">Registration</a>
@@ -56,7 +56,7 @@
       <th scope="col">Population</th>
       <th scope="col">Residents</th>
       {% if session %}
-      <th scope="col">   </th>
+      <th scope="col"></th>
       {% endif %}
     </tr>
   </thead>
@@ -64,28 +64,35 @@
   </tbody>
 </table>
 
-    <!-- Modal -->
-<<div class="modal fade" id="votesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+
+
+   <!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalCenterTitle">Voting statistics</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Voting statistics</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th scope="col">Planet</th>
-          <th scope="col">Votes</th>
-        </tr>
-      </thead>
+        <tabel class="table table-bordered">
+          <thead>
+          <tr>
+            <th scope="col">Planet</th>
+            <th scope="col">Votes</th>
+          </tr>
+          </thead>
           <tbody>
-
+          {% for planet in voted_planets %}
+            <tr>
+              <td>{{planet.planet_name}}</td>
+              <td>{{planet.votes}}</td>
+            </tr>
+          {% endfor %}
           </tbody>
-        </table>
+        </tabel>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -104,6 +111,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <!--    <script type="text/javascript" src="../static/js/apiWars.js?x=12131"></script>-->
-    <script type="text/javascript" src="../static/js/apiWarsJQuery.js"></script>
+    <script type="text/javascript" src="../static/js/apiWarsJQuery.js?v=as4"></script>
   </body>
 </html>

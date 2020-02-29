@@ -22,15 +22,16 @@ def home_page():
 
 @app.route('/index')
 def index_page():
-    return render_template('index.html')
+    voted_planets = data_manager.get_all_voted_planets_for_statistics()
+    return render_template('index.html', voted_planets=voted_planets)
 
 @app.route('/registration', methods=['GET', 'POST'])
 def registration_page():
     return render_template('registration.html')
 
-@app.route('/voteplanet/<planet_name>', methods=["GET"])
-def vote_planet(planet_name):
-    return planet_name + " xsaxasxa"
+# @app.route('/voteplanet/<planet_name>', methods=["GET"])
+# def vote_planet(planet_name):
+#     return planet_name + " xsaxasxa"
 
 @app.route('/register_form', methods=['GET', 'POST'])
 def register_user():
@@ -51,10 +52,10 @@ def register_user():
             return render_template('registration.html', message=message)
     return render_template('registration.html')
 
-@app.route("/get_planet_votes", methods=['GET'])
-def get_planet_votes():
-    #o_variabila = data_manager.get_planet_votes()
-    return jsonify(o_variabila)
+# @app.route("/get_planet_votes", methods=['GET'])
+# def get_planet_votes():
+#     #o_variabila = data_manager.get_planet_votes()
+#     return jsonify(o_variabila)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -78,13 +79,19 @@ def logout():
 
 @app.route('/api/add-voted-planet', methods=['POST'])
 def route_add_voted_planet_in_db():
-    input_planet_name = request.json['planetName']
-    print(input_planet_name)
-
+    input_planet_name = request.json['value']
     input_username = request.json['username']
-    print(input_username)
     input_user_id = data_manager.get_user_id_by_name(input_username)
-    data_manager.insert_vote(input_planet_name, input_user_id)
+    all_planets_with_user_id = data_manager.get_planet_name_and_user_id()
+
+    vote_in_db = False
+    for entry in all_planets_with_user_id:
+        if input_planet_name == entry['planet_name'] and input_user_id == entry['user_id']:
+            vote_in_db = True
+
+    if vote_in_db == False:
+        data_manager.insert_vote(input_planet_name, input_user_id)
+    return redirect(url_for('index_page'))
 
 if __name__ == '__main__':
     app.run(debug=True)

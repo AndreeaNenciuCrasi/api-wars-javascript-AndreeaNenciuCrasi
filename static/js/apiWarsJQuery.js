@@ -33,8 +33,18 @@ function buttonClicked(value){
                 createModalResidents(value);
 
             }else{
-                console.log(value);
-            }
+                let username = userName.textContent;
+                alert('You voted planet: ' + value);
+                let data = {value, username};
+                    const options = {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    };
+                    fetch('http://127.0.0.1:5000/api/add-voted-planet', options);
+                        }
     }
 
 function createModalResidents(value){

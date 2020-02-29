@@ -37,13 +37,18 @@ def get_user_id_by_name(cursor, username):
 def insert_vote(cursor, planet_name, user_id):
     query = "INSERT INTO planet_votes (planet_id, planet_name, user_id) VALUES (0, %s, %s);"
     cursor.execute(query, (planet_name, user_id))
-    # cursor.execute(sql.SQL("INSERT INTO {table} ({col3}, {col1}, {col2}) VALUES (0, %s, %s);")
-    #         .format(table=sql.Identifier('planet_votes'),
-    #                 col3=sql.Identifier('planet_id'),
-    #                 col1=sql.Identifier('planet_name'),
-    #                 col2=sql.Identifier('user_id')), [planet_name, user_id]
-    # )
 
-# def add_new_status(cursor, status_title, border_id):
-#     query = "INSERT INTO statuses (title, board_id) VALUES (%s, %s);"
-#     cursor.execute(query, (status_title, int(border_id)))
+
+@database_common.connection_handler
+def get_planet_name_and_user_id(cursor):
+    query = "SELECT planet_name, user_id FROM planet_votes;"
+    cursor.execute(query)
+    result = cursor.fetchall()
+    return result
+
+@database_common.connection_handler
+def get_all_voted_planets_for_statistics(cursor):
+    query = "SELECT planet_name, COUNT(planet_name) AS votes FROM planet_votes GROUP BY planet_name ORDER BY votes DESC;"
+    cursor.execute(query)
+    result = cursor.fetchall()
+    return result
